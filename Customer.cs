@@ -26,18 +26,19 @@ namespace S10272091_PRG2Assignment
         public Order Order { get; set; }
         public List<Order> Orders { get; set; }
         public string ReferralCode {  get; set; }
-        public string ReferralPromo { get; set; }
+        public bool ReferralPromo { get; set; }
 
         public Customer() {
             Orders = new List<Order>();
         }
 
-        public Customer(string emailAddress, string customerName)
+        public Customer(string emailAddress, string customerName, bool referralPromo)
         {
             EmailAddress = emailAddress;
             CustomerName = customerName;
             Orders = new List<Order>();
             ReferralCode = customerName;
+            ReferralPromo = referralPromo;
         }
 
         public void AddOrder(Order order)

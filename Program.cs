@@ -80,7 +80,7 @@ void LoadCustomer()
         while ((line = sr.ReadLine()) != null)
         {
             string[] parts = line.Split(',');
-            Customer c = new Customer(parts[1], parts[0]);
+            Customer c = new Customer(parts[1], parts[0], false);
             CustomerList.Add(c);
 
         }
@@ -379,6 +379,13 @@ void CreateOrder()
     // 8️⃣ Calculate total
     double deliveryFee = 5.0;
     customerOrder.OrderTotal = customerOrder.CalculateOrderTotal() + deliveryFee;
+
+    //BONUS FEATURE
+    if (customer.ReferralPromo)
+    {
+        customerOrder.OrderTotal = customerOrder.OrderTotal * 0.8;
+    }
+
     Console.WriteLine($"Order Total: ${customerOrder.OrderTotal:F2} (including ${deliveryFee} delivery)");
 
     // 9️⃣ Payment method
@@ -471,6 +478,9 @@ while (true)
         case "4":
             DisplayTotalOrder();
             break;
+        case "5":
+            CreateNewCustomer();
+            break;
         case "0":
             Console.WriteLine("Exiting program. Goodbye!");
             return;
@@ -519,3 +529,26 @@ void DisplayTotalOrder()
 
 }
 
+
+void CreateNewCustomer()
+{
+    Console.Write("Enter you name: ");
+    string name = Console.ReadLine();
+    Console.Write("Enter your email: ");
+    string email = Console.ReadLine();
+    Console.Write("Enter referral code if any: ");
+    string referralCode = Console.ReadLine();
+    bool ReferralPromo = false;
+    foreach (Customer c1 in CustomerList)
+    {
+        if (c1.ReferralCode == referralCode)
+        {
+            ReferralPromo = true;
+            Console.WriteLine("You are entitled to a 20% discount on you first order in Gruberoo!");
+            break;
+        }
+
+    }
+    Customer c = new Customer(email,name,ReferralPromo);
+
+}
