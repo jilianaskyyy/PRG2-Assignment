@@ -26,7 +26,7 @@ List<Order>OrderList = new List<Order>();
 
 void LoadRestaurant()
 {
-    using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/restaurants.csv"))
+    using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/restaurants.csv"))
     {
         string? line;
         sr.ReadLine();
@@ -43,7 +43,7 @@ LoadRestaurant();
 
 void LoadFoodItems()
 {
-    using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/fooditems.csv"))
+    using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/fooditems.csv"))
     {
         List<FoodItem> FoodItemList = new List<FoodItem>();
         string? line;
@@ -73,7 +73,7 @@ LoadFoodItems();
 
 void LoadCustomer()
 {
-    using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/customers.csv"))
+    using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/customers.csv"))
     {
         string? line;
         sr.ReadLine();
@@ -90,7 +90,7 @@ LoadCustomer();
 
 void LoadOrder()
 {
-    using StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/orders.csv") ;
+    using StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/orders.csv") ;
     using CsvReader csv = new CsvReader(sr, CultureInfo.InvariantCulture);
     csv.Read();
     csv.ReadHeader();
