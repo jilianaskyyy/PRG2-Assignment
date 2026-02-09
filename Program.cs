@@ -7,18 +7,18 @@ using S10272091_PRG2Assignment;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using CsvHelper;
-void DisplayMainMenu()
-{
-    Console.WriteLine("===== Gruberoo Food Delivery System =====");
-    Console.WriteLine("1.List all restaurants and menu items");
-    Console.WriteLine("2.List all orders");
-    Console.WriteLine("3.Create a new order");
-    Console.WriteLine("4.Process an order");
-    Console.WriteLine("5.Modify an existing order");
-    Console.WriteLine("6.Delete an existing order");
-    Console.WriteLine("0.Exit");
-    Console.Write("Enter your choice: ");
-}
+//void DisplayMainMenu()
+//{
+//    Console.WriteLine("===== Gruberoo Food Delivery System =====");
+//    Console.WriteLine("1.List all restaurants and menu items");
+//    Console.WriteLine("2.List all orders");
+//    Console.WriteLine("3.Create a new order");
+//    Console.WriteLine("4.Process an order");
+//    Console.WriteLine("5.Modify an existing order");
+//    Console.WriteLine("6.Delete an existing order");
+//    Console.WriteLine("0.Exit");
+//    Console.Write("Enter your choice: ");
+//}
 List<Restaurant> RestaurantList = new List<Restaurant>();
 List<Customer>CustomerList = new List<Customer>();
 List<Order>OrderList = new List<Order>();
@@ -185,7 +185,7 @@ void DisplayOrder()
     }
 
 }
-DisplayOrder();
+//DisplayOrder();
 
 
 string GetCustomer(int OrderId)
@@ -440,7 +440,7 @@ void CreateOrder()
 
     Console.WriteLine($"Order {customerOrder.OrderId} created successfully! Status: {customerOrder.OrderStatus}");
 }
-CreateOrder();
+//CreateOrder();
 
 Console.WriteLine("Welcome to the Gruberoo Food Delivery System");
 Console.WriteLine($"{RestaurantList.Count} restaurants loaded!");
@@ -459,6 +459,7 @@ while (true)
     Console.WriteLine("2. List all orders");
     Console.WriteLine("3. Create a new order");
     Console.WriteLine("4. Display Total Order Amount");
+    Console.WriteLine("5. Add new customer");
     Console.WriteLine("0. Exit");
     Console.Write("Enter your choice: ");
 
