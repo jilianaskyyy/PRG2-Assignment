@@ -37,7 +37,7 @@ namespace S10272091_PRG2Assignment
 
         public string ToString()
         {
-            return $"   - {ItemName}: {ItemDesc} - ${ItemPrice}";
+            return $"   - {ItemName}: {ItemDesc} - ${ItemPrice:F2}";
         }
 
 
