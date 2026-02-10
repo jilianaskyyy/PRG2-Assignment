@@ -388,7 +388,7 @@ void CreateOrder()
         customerOrder.OrderTotal = customerOrder.OrderTotal * 0.8;
     }
 
-    Console.WriteLine($"Order Total: ${customerOrder.OrderTotal-5 :F2} + $5.00 (delivery) = {customerOrder.OrderTotal}");
+    Console.WriteLine($"Order Total: ${customerOrder.OrderTotal-5 :F2} + $5.00 (delivery) = ${customerOrder.OrderTotal:F2}");
 
     //Payment method
     while (true)
