@@ -12,7 +12,7 @@ List<Restaurant> RestaurantList = new List<Restaurant>();
 List<Customer>CustomerList = new List<Customer>();
 List<Order>OrderList = new List<Order>();
 
-
+//LOADING RESTAURANT.CSV
 void LoadRestaurant()
 {
     using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/restaurants.csv"))
@@ -30,6 +30,7 @@ void LoadRestaurant()
 }
 LoadRestaurant();
 
+//LOADING FOODITEMS.CSV
 void LoadFoodItems()
 {
     using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/fooditems.csv"))
@@ -60,6 +61,7 @@ void LoadFoodItems()
 }
 LoadFoodItems();
 
+//LOADING CUSTOMER.CSV
 void LoadCustomer()
 {
     using (StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/customers.csv"))
@@ -77,6 +79,7 @@ void LoadCustomer()
 }
 LoadCustomer();
 
+//LOADING ORDER.CSV
 void LoadOrder()
 {
     using StreamReader sr = new StreamReader("C:/Users/Jiliana Sky/OneDrive - Ngee Ann Polytechnic/Desktop/1.2/PRG II/Week13/S10272091_PRG2Assignment/orders.csv") ;
@@ -127,18 +130,11 @@ void LoadOrder()
         }
 
         OrderList.Add(o);
-
-
-
-
-
     }
 }
-
-
 LoadOrder();
 
-
+//LOADING MENU ITEMS
 void LoadMenuItems()
 {
     Console.WriteLine("All Restaurants and Menu Items");
@@ -159,7 +155,7 @@ void LoadMenuItems()
 
 }
 
-
+//DISPLAYING ALL ORDERS
 void DisplayOrder()
 {
     Console.WriteLine("All Orders");
@@ -174,8 +170,7 @@ void DisplayOrder()
 
 }
 
-
-
+//FIND CUSTOMER WHO PLACED A SPECIFIC ORDER BASED ON THE ORDER ID
 string GetCustomer(int OrderId)
 {
     foreach(Customer c in CustomerList)
@@ -194,6 +189,7 @@ string GetCustomer(int OrderId)
     return "";
 }
 
+//FIND RESTAURANT WHO PLACED A SPECIFIC ORDER BASED ON THE ORDER ID
 
 string GetRestaurant(int OrderId)
 {
@@ -213,13 +209,13 @@ string GetRestaurant(int OrderId)
     return "";
 }
 
-
+//CREATE ORDER
 void CreateOrder()
 {
     Console.WriteLine("Create New Order");
     Console.WriteLine("================");
 
-    // 1️⃣ Get customer email and validate
+    //Get customer email and validate
     Customer customer = null;
     while (true)
     {
@@ -239,7 +235,7 @@ void CreateOrder()
         else break;
     }
 
-    // 2️⃣ Get restaurant ID and validate
+    //Get restaurant ID and validate
     Restaurant restaurant = null;
     while (true)
     {
@@ -259,7 +255,7 @@ void CreateOrder()
         else break;
     }
 
-    // 3️⃣ Get delivery date, time, and validate
+    //Get delivery date, time, and validate
     DateTime deliveryDateTime;
 
     while (true)
@@ -303,7 +299,7 @@ void CreateOrder()
         }
     }
 
-    // 4️⃣ Get delivery address
+    //Get delivery address and validate
     string address;
     while (true)
     {
@@ -316,7 +312,7 @@ void CreateOrder()
         else break;
     }
 
-    // 5️⃣ Display food items
+    //Display food items
     List<FoodItem> foods = restaurant.MenuList.Count > 0 ? restaurant.MenuList[0].FoodItems : new List<FoodItem>();
     if (foods.Count == 0)
     {
@@ -327,10 +323,10 @@ void CreateOrder()
     Console.WriteLine("\nAvailable Food Items:");
     for (int i = 0; i < foods.Count; i++)
     {
-        Console.WriteLine($"{i + 1}. {foods[i].ItemName} - ${foods[i].ItemPrice}");
+        Console.WriteLine($"{i + 1}. {foods[i].ItemName} - ${foods[i].ItemPrice:F2}");
     }
 
-    // 6️⃣ Create Order and select items
+    //Create Order and select items
     Order customerOrder = new Order { OrderedFoodItems = new List<OrderedFoodItem>() };
     while (true)
     {
@@ -372,7 +368,7 @@ void CreateOrder()
         return;
     }
 
-    // 7️⃣ Special request
+    //Special request
     Console.Write("Add special request? [Y/N]: ");
     string specialReq = Console.ReadLine()?.Trim().ToUpper();
     if (specialReq == "Y")
@@ -382,7 +378,7 @@ void CreateOrder()
         customerOrder.OrderedFoodItems.ForEach(f => f.Customise = request);
     }
 
-    // 8️⃣ Calculate total
+    //Calculate total
     double deliveryFee = 5.0;
     customerOrder.OrderTotal = customerOrder.CalculateOrderTotal() + deliveryFee;
 
@@ -392,16 +388,17 @@ void CreateOrder()
         customerOrder.OrderTotal = customerOrder.OrderTotal * 0.8;
     }
 
-    Console.WriteLine($"Order Total: ${customerOrder.OrderTotal:F2} (including ${deliveryFee} delivery)");
+    Console.WriteLine($"Order Total: ${customerOrder.OrderTotal-5 :F2} + $5.00 (delivery) = {customerOrder.OrderTotal}");
 
-    // 9️⃣ Payment method
+    //Payment method
     while (true)
     {
         Console.Write("Proceed to payment? [Y/N]: ");
         string pay = Console.ReadLine()?.Trim().ToUpper();
         if (pay == "Y")
         {
-            Console.Write("Payment method [CC] = Credit Card  [PP] = PayPal  [CD] = Cash on Delivery: ");
+            Console.WriteLine("Payment method:");
+            Console.Write("[CC] Credit Card / [PP] PayPal / [CD] Cash on Delivery: ");
             string method = Console.ReadLine()?.Trim().ToUpper();
             if (method != "CC" && method != "PP" && method != "CD")
             {
@@ -424,7 +421,7 @@ void CreateOrder()
         }
     }
 
-    // 10️⃣ Generate Order ID & assign info
+    //Generate Order ID & assign info
     int newOrderId = OrderList.Count > 0 ? OrderList.Max(o => o.OrderId) + 1 : 1001;
     customerOrder.OrderId = newOrderId;
     customerOrder.OrderStatus = "Pending";
@@ -432,12 +429,12 @@ void CreateOrder()
     customerOrder.DeliveryAddress = address;
     customerOrder.OrderDateTime = DateTime.Now;
 
-    // 11️⃣ Add to lists
+    //Add to lists
     customer.AddOrder(customerOrder);
     restaurant.OrderList.Add(customerOrder);
     OrderList.Add(customerOrder);
 
-    // 12️⃣ Append to CSV
+    //Append to CSV
     using (StreamWriter sw = new StreamWriter("orders.csv", append: true))
     {
         string itemsStr = string.Join("|", customerOrder.OrderedFoodItems.Select(f => $"{f.ItemName},{f.QtyOrdered}"));
@@ -446,8 +443,9 @@ void CreateOrder()
 
     Console.WriteLine($"Order {customerOrder.OrderId} created successfully! Status: {customerOrder.OrderStatus}");
 }
-//CreateOrder();
 
+
+//DISPLAY LOADING OF FILES
 Console.WriteLine("Welcome to the Gruberoo Food Delivery System");
 Console.WriteLine($"{RestaurantList.Count} restaurants loaded!");
 int totalFoodItems = RestaurantList.Sum(r => r.MenuList.Count > 0 ? r.MenuList[0].FoodItems.Count : 0);
@@ -459,7 +457,7 @@ Console.WriteLine();
 
 while (true)
 {
-    // Display main menu
+    //DISPLAY MAIN MENU
     Console.WriteLine("===== Gruberoo Food Delivery System =====");
     Console.WriteLine("1. List all restaurants and menu items");
     Console.WriteLine("2. List all orders");
@@ -483,10 +481,10 @@ while (true)
             CreateOrder();    // creates a new order
             break;
         case "4":
-            DisplayTotalOrder();
+            DisplayTotalOrder();    // displays total order amount
             break;
         case "5":
-            CreateNewCustomer();
+            CreateNewCustomer();    // adds new customer and asks for referral code to be entitled to a discount
             break;
         case "0":
             Console.WriteLine("Exiting program. Goodbye!");
@@ -496,10 +494,10 @@ while (true)
             break;
     }
 
-    Console.WriteLine(); // Blank line for readability
+    Console.WriteLine(); 
 }
 
-
+//ADVANCED FEATURE OPTION(B)
 void DisplayTotalOrder()
 {
     double totalOrderAmount = 0;
@@ -536,7 +534,7 @@ void DisplayTotalOrder()
     Console.WriteLine($"Final Amount Gruberoo Earns: ${gruberooEarnings}");
 }
 
-
+//ADD NEW CUSTOMER FOR BONUS FEATURE
 void CreateNewCustomer()
 {
     Console.Write("Enter you name: ");
@@ -554,6 +552,11 @@ void CreateNewCustomer()
             Console.WriteLine("You are entitled to a 20% discount on you first order in Gruberoo!");
             break;
         }
+        else
+        {
+            ReferralPromo = false;
+            Console.WriteLine("Your referral code is invalid.");
+        }
 
     }
     Customer c = new Customer(email,name,ReferralPromo);
@@ -561,8 +564,3 @@ void CreateNewCustomer()
 }
 
 
-// fix advanced feature the math like not mathing
-// UI of creating new order
-// spacing between things
-// alignment
-// 2 dp and $ signs
