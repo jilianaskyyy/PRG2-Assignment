@@ -41,7 +41,10 @@ namespace S10272091_PRG2Assignment
         public SpecialOffer SpecialOffer { get; set; }
 
 
-        public Order() { }
+        public Order()
+        {
+            OrderedFoodItems = new List<OrderedFoodItem>();
+        }
 
         public Order(int orderId, DateTime orderDateTime, double orderTotal, string orderStatus, DateTime deliveryDateTime, string deliveryAddress, string orderPaymentMethod, bool orderPaid)
         {
@@ -60,7 +63,7 @@ namespace S10272091_PRG2Assignment
         public double CalculateOrderTotal()
         {
             OrderTotal = 0;
-            foreach(OrderedFoodItem item in orderedfooditems)
+            foreach (OrderedFoodItem item in OrderedFoodItems)
             {
                 OrderTotal += item.CalculateSubtotal();
             }
@@ -87,12 +90,11 @@ namespace S10272091_PRG2Assignment
 
         public void DisplayOrderedFoodItems()
         {
-            int counter = 0;
-            foreach (OrderedFoodItem item in orderedfooditems)
+            int counter = 1;
+            foreach (OrderedFoodItem item in OrderedFoodItems)
             {
                 Console.WriteLine($"{counter++}. {item.ItemName} - {item.QtyOrdered}");
             }
-            
         }
 
         public string ToString()
