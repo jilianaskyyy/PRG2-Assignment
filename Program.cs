@@ -168,12 +168,12 @@ void DisplayOrder()
     Console.WriteLine($"{"--------",-10} {"----------",-20} {"-------------",-20} {"------------------",-25}{"------",-10} {"---------",-10}");
     foreach(Order o in OrderList)
     {
-        Console.WriteLine($"{o.OrderId,-11}{GetCustomer(o.OrderId),-21}{GetRestaurant(o.OrderId),-21}{o.DeliveryDateTime,-25}{o.OrderTotal,-11}{o.OrderStatus,-10}");
+        Console.WriteLine($"{o.OrderId,-11}{GetCustomer(o.OrderId),-21}{GetRestaurant(o.OrderId),-21}{o.DeliveryDateTime.ToString("dd/MM/yyyy HH:mm"),-25}${o.OrderTotal,-10:F2}{o.OrderStatus,-10}");
 
     }
 
 }
-//DisplayOrder();
+
 
 
 string GetCustomer(int OrderId)
@@ -261,11 +261,13 @@ void CreateOrder()
 
     // 3️⃣ Get delivery date, time, and validate
     DateTime deliveryDateTime;
+
     while (true)
     {
         Console.Write("Enter Delivery Date (dd/MM/yyyy): ");
         string date = Console.ReadLine()?.Trim();
-        Console.Write("Enter Delivery Time (HH:mm): ");
+
+        Console.Write("Enter Delivery Time (HH:mm or hh:mm tt): ");
         string time = Console.ReadLine()?.Trim();
 
         if (string.IsNullOrEmpty(date) || string.IsNullOrEmpty(time))
@@ -274,7 +276,20 @@ void CreateOrder()
             continue;
         }
 
-        if (!DateTime.TryParseExact(date + " " + time, "dd/MM/yyyy HH:mm", null, DateTimeStyles.None, out deliveryDateTime))
+        string dateTimeInput = date + " " + time;
+
+        string[] formats =
+        {
+        "dd/MM/yyyy HH:mm",
+        "dd/MM/yyyy hh:mm tt"
+    };
+
+        if (!DateTime.TryParseExact(
+                dateTimeInput,
+                formats,
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out deliveryDateTime))
         {
             Console.WriteLine("Invalid date/time format. Please try again.");
         }
@@ -282,7 +297,10 @@ void CreateOrder()
         {
             Console.WriteLine("Delivery date/time cannot be in the past.");
         }
-        else break;
+        else
+        {
+            break;
+        }
     }
 
     // 4️⃣ Get delivery address
