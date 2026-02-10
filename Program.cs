@@ -7,18 +7,7 @@ using S10272091_PRG2Assignment;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using CsvHelper;
-//void DisplayMainMenu()
-//{
-//    Console.WriteLine("===== Gruberoo Food Delivery System =====");
-//    Console.WriteLine("1.List all restaurants and menu items");
-//    Console.WriteLine("2.List all orders");
-//    Console.WriteLine("3.Create a new order");
-//    Console.WriteLine("4.Process an order");
-//    Console.WriteLine("5.Modify an existing order");
-//    Console.WriteLine("6.Delete an existing order");
-//    Console.WriteLine("0.Exit");
-//    Console.Write("Enter your choice: ");
-//}
+
 List<Restaurant> RestaurantList = new List<Restaurant>();
 List<Customer>CustomerList = new List<Customer>();
 List<Order>OrderList = new List<Order>();
@@ -169,7 +158,6 @@ void LoadMenuItems()
     }
 
 }
-LoadMenuItems();
 
 
 void DisplayOrder()
@@ -180,7 +168,7 @@ void DisplayOrder()
     Console.WriteLine($"{"--------",-10} {"----------",-20} {"-------------",-20} {"------------------",-25}{"------",-10} {"---------",-10}");
     foreach(Order o in OrderList)
     {
-        Console.WriteLine($"{o.OrderId,-10}{GetCustomer(o.OrderId),-20}{GetRestaurant(o.OrderId),-20}{o.DeliveryDateTime,-25}{o.OrderTotal,-10}{o.OrderStatus,-10}");
+        Console.WriteLine($"{o.OrderId,-11}{GetCustomer(o.OrderId),-21}{GetRestaurant(o.OrderId),-21}{o.DeliveryDateTime,-25}{o.OrderTotal,-11}{o.OrderStatus,-10}");
 
     }
 
@@ -395,7 +383,7 @@ void CreateOrder()
         string pay = Console.ReadLine()?.Trim().ToUpper();
         if (pay == "Y")
         {
-            Console.Write("Payment method [CC = Credit Card / PP = PayPal / CD = Cash on Delivery]: ");
+            Console.Write("Payment method [CC] = Credit Card  [PP] = PayPal  [CD] = Cash on Delivery: ");
             string method = Console.ReadLine()?.Trim().ToUpper();
             if (method != "CC" && method != "PP" && method != "CD")
             {
@@ -496,38 +484,38 @@ while (true)
 
 void DisplayTotalOrder()
 {
-    double TotalOrderAmount = 0;
-    double TotalRefundedAmount = 0;
-    double GruberooEarnings = 0;
-    foreach ( Restaurant r in RestaurantList)
+    double totalOrderAmount = 0;
+    double totalRefundedAmount = 0;
+    double gruberooEarnings = 0;
+
+    foreach (Restaurant r in RestaurantList)
     {
-        foreach ( Order o in r.OrderList)
+        foreach (Order o in r.OrderList)
         {
-            double FoodItemTotal = 0;
+            // Skip empty orders
+            if (o.OrderedFoodItems == null || o.OrderedFoodItems.Count == 0)
+                continue;
+
             if (o.OrderStatus == "Delivered")
             {
-
-                foreach (OrderedFoodItem ofi in o.OrderedFoodItems)
-                {
-                    FoodItemTotal += ofi.SubTotal;
-                    TotalOrderAmount += ofi.SubTotal;
-                }
-                GruberooEarnings = o.OrderTotal - FoodItemTotal;
-            } else if(o.OrderStatus == "Cancelled")
+                totalOrderAmount += (o.OrderTotal - 5);
+                gruberooEarnings += 5;
+            }
+            else if (o.OrderStatus == "Cancelled")
             {
                 foreach (OrderedFoodItem ofi in o.OrderedFoodItems)
                 {
-                    TotalRefundedAmount += ofi.SubTotal;
+                    totalRefundedAmount += ofi.SubTotal;
                 }
             }
         }
     }
+
     Console.WriteLine("___________________________");
     Console.WriteLine("Printing Total...");
-    Console.WriteLine($"Total Order Amount: ${TotalOrderAmount}");
-    Console.WriteLine($"Total Refunds: ${TotalRefundedAmount}");
-    Console.WriteLine($"Final Amount Gruberoo Earns: ${GruberooEarnings}");
-
+    Console.WriteLine($"Total Order Amount: ${totalOrderAmount:F2}");
+    Console.WriteLine($"Total Refunds: ${totalRefundedAmount:F2}");
+    Console.WriteLine($"Final Amount Gruberoo Earns: ${gruberooEarnings}");
 }
 
 
@@ -553,3 +541,10 @@ void CreateNewCustomer()
     Customer c = new Customer(email,name,ReferralPromo);
 
 }
+
+
+// fix advanced feature the math like not mathing
+// UI of creating new order
+// spacing between things
+// alignment
+// 2 dp and $ signs
