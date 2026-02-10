@@ -99,7 +99,7 @@ namespace S10272091_PRG2Assignment
 
         public string ToString()
         {
-            return$"{OrderId,-10}{OrderDateTime,-10}{OrderTotal,-10}{OrderStatus,-10}{DeliveryDateTime,-10}{DeliveryAddress,-10}{OrderPaymentMethod,-10}{OrderPaid,-10}";
+            return$"{OrderId,-10}{OrderDateTime,-10}{OrderTotal,-10:F2}{OrderStatus,-10}{DeliveryDateTime,-10}{DeliveryAddress,-10}{OrderPaymentMethod,-10}{OrderPaid,-10}";
         }
     }
 }
